@@ -7,16 +7,25 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
+import org.robolectric.annotation.RealObject;
+import org.robolectric.shadow.api.Shadow;
+import org.robolectric.util.ReflectionHelpers.ClassParameter;
 
 @Implements(PorterDuffColorFilter.class)
 public class ShadowPorterDuffColorFilter {
   private int color;
   private PorterDuff.Mode mode;
+  @RealObject private PorterDuffColorFilter realPorterDuffColorFilter;
 
   @Implementation
   protected void __constructor__(int color, PorterDuff.Mode mode) {
     this.color = color;
     this.mode = mode;
+    Shadow.invokeConstructor(
+        PorterDuffColorFilter.class,
+        realPorterDuffColorFilter,
+        ClassParameter.from(int.class, color),
+        ClassParameter.from(PorterDuff.Mode.class, mode));
   }
 
   @Implementation(minSdk = LOLLIPOP, maxSdk = P)

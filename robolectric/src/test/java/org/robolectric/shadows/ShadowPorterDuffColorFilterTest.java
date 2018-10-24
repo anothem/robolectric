@@ -22,6 +22,12 @@ public class ShadowPorterDuffColorFilterTest {
   }
 
   @Test
+  public void createNativeInstance_shouldWork() {
+    final PorterDuffColorFilter filter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.ADD);
+    assertThat(filter.getNativeInstance()).isNotEqualTo(0L);
+  }
+
+    @Test
   public void hashCode_returnsDifferentValuesForDifferentModes() {
     PorterDuffColorFilter addFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.ADD);
     PorterDuffColorFilter dstFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.DST);
